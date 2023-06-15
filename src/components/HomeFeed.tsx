@@ -3,6 +3,7 @@ import { RefreshControl } from "react-native";
 import { useQuery } from "@tanstack/react-query";
 
 import { getPosts } from "../api/getPosts";
+import { FeedPostItem } from "./FeedPostItem";
 
 export function HomeFeed() {
   const { data, error, isLoading, refetch } = useQuery(["posts"], getPosts);
@@ -21,7 +22,7 @@ export function HomeFeed() {
       }
     >
       {data.map((post) => (
-        <Paragraph>{post.caption}</Paragraph>
+        <FeedPostItem key={post.id} post={post} />
       ))}
     </ScrollView>
   );
