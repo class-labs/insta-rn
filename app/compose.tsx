@@ -1,5 +1,5 @@
 import { Stack } from "expo-router";
-import { Paragraph } from "tamagui";
+import { NewPostForm } from "../src/components/NewPostForm";
 
 export default () => {
   return (
@@ -10,7 +10,7 @@ export default () => {
           headerTintColor: "black",
         }}
       />
-      <Paragraph>Compose will go here</Paragraph>
+      <NewPostForm />
     </>
   );
 };
