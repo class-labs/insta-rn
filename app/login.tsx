@@ -1,5 +1,6 @@
 import { Stack } from "expo-router";
-import { Paragraph } from "tamagui";
+
+import { LoginForm } from "../src/components/LoginForm";
 
 export default () => {
   return (
@@ -10,7 +11,7 @@ export default () => {
           headerTintColor: "black",
         }}
       />
-      <Paragraph>Login will go here</Paragraph>
+      <LoginForm />
     </>
   );
 };
