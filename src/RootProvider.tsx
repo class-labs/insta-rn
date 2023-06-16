@@ -4,6 +4,7 @@ import { useFonts } from "expo-font";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import config from "./config/tamagui.config";
+import { AuthProvider } from "./support/Auth";
 
 const queryClient = new QueryClient();
 
@@ -16,12 +17,14 @@ export function RootProvider(props: { children: ReactNode }) {
     return null;
   }
   return (
-    <TamaguiProvider config={config} disableInjectCSS>
-      <Theme name="light">
-        <QueryClientProvider client={queryClient}>
-          {props.children}
-        </QueryClientProvider>
-      </Theme>
-    </TamaguiProvider>
+    <AuthProvider>
+      <TamaguiProvider config={config} disableInjectCSS>
+        <Theme name="light">
+          <QueryClientProvider client={queryClient}>
+            {props.children}
+          </QueryClientProvider>
+        </Theme>
+      </TamaguiProvider>
+    </AuthProvider>
   );
 }

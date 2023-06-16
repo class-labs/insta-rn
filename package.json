@@ -13,6 +13,7 @@
     "test": "npm run typecheck && npm run lint && npm run format:check"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "1.17.11",
     "@tamagui/font-inter": "^1.33.2",
     "@tamagui/lucide-icons": "^1.33.2",
     "@tamagui/react-native-media-driver": "^1.33.2",
