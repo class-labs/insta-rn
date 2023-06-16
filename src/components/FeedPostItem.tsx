@@ -6,6 +6,7 @@ import {
 } from "@tamagui/lucide-icons";
 import { getInitials } from "../support/getInitials";
 import { FeedPost } from "../types/FeedPost";
+import { formatRelativeTime } from "../support/formatRelativeTime";
 
 type Props = {
   post: FeedPost;
@@ -13,7 +14,14 @@ type Props = {
 
 export function FeedPostItem(props: Props) {
   const { post } = props;
-  const { author, caption, likeCount, commentCount, isLikedByViewer } = post;
+  const {
+    author,
+    caption,
+    likeCount,
+    commentCount,
+    isLikedByViewer,
+    createdAt,
+  } = post;
   return (
     <YStack>
       <XStack px={16} py={12} alignItems="center" space={8}>
@@ -48,12 +56,13 @@ export function FeedPostItem(props: Props) {
         <Paragraph fontWeight="600">
           {likeCount === 1 ? "1 like" : `${likeCount.toLocaleString()} likes`}
         </Paragraph>
-        <Paragraph opacity={0.85}>{caption}</Paragraph>
+        <Paragraph opacity={0.8}>{caption}</Paragraph>
         <Paragraph fontWeight="600">
           {commentCount === 1
             ? "View 1 comment"
             : `View ${commentCount.toLocaleString()} comments`}
         </Paragraph>
+        <Paragraph opacity={0.4}>{formatRelativeTime(createdAt)}</Paragraph>
       </YStack>
     </YStack>
   );
