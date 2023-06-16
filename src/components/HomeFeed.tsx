@@ -1,24 +1,26 @@
 import { Paragraph, ScrollView } from "tamagui";
-import { FeedPost } from "../types/FeedPost";
 import { RefreshControl } from "react-native";
+import { useQuery } from "@tanstack/react-query";
 
-type Props = {
-  posts: Array<FeedPost>;
-  isRefreshing: boolean;
-  onRefresh: () => void;
-};
+import { getPosts } from "../api/getPosts";
 
-export function HomeFeed(props: Props) {
-  const { posts, isRefreshing, onRefresh } = props;
+export function HomeFeed() {
+  const { data, error, isLoading, refetch } = useQuery(["posts"], getPosts);
+  if (error) {
+    return <Paragraph>{String(error)}</Paragraph>;
+  }
+  if (!data) {
+    return <Paragraph>Loading...</Paragraph>;
+  }
   return (
     <ScrollView
       flex={1}
       backgroundColor="white"
       refreshControl={
-        <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
+        <RefreshControl refreshing={isLoading} onRefresh={refetch} />
       }
     >
-      {posts.map((post) => (
+      {data.map((post) => (
         <Paragraph>{post.caption}</Paragraph>
       ))}
     </ScrollView>
