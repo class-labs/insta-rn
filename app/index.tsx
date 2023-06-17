@@ -1,11 +1,11 @@
 import { Stack } from "expo-router";
-import { Image, Paragraph, YStack } from "tamagui";
+import { Image, Paragraph, ScrollView, YStack } from "tamagui";
 
 import { posts } from "../src/posts";
 
 export default () => {
   return (
-    <YStack flex={1}>
+    <ScrollView flex={1}>
       <Stack.Screen options={{ title: "Home" }} />
       {posts.map((post) => (
         <YStack key={post.id}>
@@ -13,6 +13,6 @@ export default () => {
           <Paragraph padding={10}>{post.caption}</Paragraph>
         </YStack>
       ))}
-    </YStack>
+    </ScrollView>
   );
 };
