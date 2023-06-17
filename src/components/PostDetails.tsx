@@ -151,6 +151,7 @@ export function PostDetails() {
             flex={1}
             value={newComment}
             onChangeText={(value) => setNewComment(value)}
+            autoFocus={params.intent === "comment"}
             disabled={isSavingComment}
             returnKeyType="go"
             onSubmitEditing={() => {
