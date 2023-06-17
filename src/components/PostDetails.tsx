@@ -15,7 +15,7 @@ import {
   Send as IconSend,
 } from "@tamagui/lucide-icons";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { usePathname } from "expo-router";
+import { useSearchParams } from "expo-router";
 import { getInitials } from "../support/getInitials";
 import { formatRelativeTime } from "../support/formatRelativeTime";
 import { sendLikePost } from "../api/sendLikePost";
@@ -25,9 +25,8 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { sendCreateComment } from "../api/sendCreateComment";
 
 export function PostDetails() {
-  const pathname = usePathname();
-  // TODO: Fix this
-  const postId = pathname.split("/").pop() ?? "";
+  const params = useSearchParams();
+  const postId = String(params.id);
   const queryClient = useQueryClient();
   const insets = useSafeAreaInsets();
   const [newComment, setNewComment] = useState("");
