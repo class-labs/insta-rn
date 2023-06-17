@@ -1,6 +1,5 @@
 import { Alert, KeyboardAvoidingView, Pressable } from "react-native";
 import {
-  Avatar,
   Image,
   Input,
   Paragraph,
@@ -16,13 +15,13 @@ import {
 } from "@tamagui/lucide-icons";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useSearchParams } from "expo-router";
-import { getInitials } from "../support/getInitials";
 import { formatRelativeTime } from "../support/formatRelativeTime";
 import { sendLikePost } from "../api/sendLikePost";
 import { getPost } from "../api/getPost";
 import { useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { sendCreateComment } from "../api/sendCreateComment";
+import { UserAvatar } from "./UserAvatar";
 
 export function PostDetails() {
   const params = useSearchParams();
@@ -78,14 +77,7 @@ export function PostDetails() {
     >
       <KeyboardAvoidingView behavior="position">
         <XStack px={16} py={12} alignItems="center" space={8}>
-          <Avatar circular size="$4">
-            <Avatar.Image source={{ uri: author.profilePhoto }} />
-            <Avatar.Fallback>
-              <YStack flex={1} jc="center" ai="center">
-                <Paragraph>{getInitials(author.name)}</Paragraph>
-              </YStack>
-            </Avatar.Fallback>
-          </Avatar>
+          <UserAvatar user={author} />
           <Paragraph>{author.name}</Paragraph>
         </XStack>
         <Image source={{ uri: photo }} aspectRatio={1} resizeMode="cover" />
@@ -114,29 +106,19 @@ export function PostDetails() {
         <View height={1} backgroundColor="#e8e8e8" />
         <YStack px={16} pt={16} pb={12} space={12}>
           <Paragraph fontSize={14}>Comments ({comments.length})</Paragraph>
-          {comments.map((comment) => {
-            const { author } = comment;
-            return (
-              <XStack key={comment.id} space={10}>
-                <Avatar circular size="$3">
-                  <Avatar.Image source={{ uri: author.profilePhoto }} />
-                  <Avatar.Fallback>
-                    <YStack flex={1} jc="center" ai="center">
-                      <Paragraph>{getInitials(author.name)}</Paragraph>
-                    </YStack>
-                  </Avatar.Fallback>
-                </Avatar>
-                <YStack>
-                  <Paragraph
-                    fontSize={14}
-                  >{`${author.name}: ${comment.text}`}</Paragraph>
-                  <Paragraph fontSize={12} opacity={0.4}>
-                    {formatRelativeTime(comment.createdAt)}
-                  </Paragraph>
-                </YStack>
-              </XStack>
-            );
-          })}
+          {comments.map((comment) => (
+            <XStack key={comment.id} space={10}>
+              <UserAvatar user={comment.author} size="sm" />
+              <YStack>
+                <Paragraph
+                  fontSize={14}
+                >{`${comment.author.name}: ${comment.text}`}</Paragraph>
+                <Paragraph fontSize={12} opacity={0.4}>
+                  {formatRelativeTime(comment.createdAt)}
+                </Paragraph>
+              </YStack>
+            </XStack>
+          ))}
         </YStack>
         <View height={1} backgroundColor="#e8e8e8" />
         <XStack
