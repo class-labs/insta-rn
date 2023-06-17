@@ -1,16 +1,18 @@
 import { Stack } from "expo-router";
-import { Button, YStack } from "tamagui";
+import { Paragraph, YStack } from "tamagui";
+
+import { posts } from "../src/posts";
 
 export default () => {
   return (
-    <YStack
-      flex={1}
-      justifyContent="center"
-      alignItems="center"
-      backgroundColor="#ddf"
-    >
+    <YStack flex={1} padding={10}>
       <Stack.Screen options={{ title: "Home" }} />
-      <Button>Click Me</Button>
+      {
+        // Task 1
+        // Render just the caption of each post in the `posts` array
+        // Hint: use array.map() to loop through the array
+        // Use a <Paragraph></Paragraph> to render it
+      }
     </YStack>
   );
 };
