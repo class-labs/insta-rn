@@ -20,7 +20,9 @@ export function FeedPostItem(props: Props) {
         <Avatar circular size="$4">
           <Avatar.Image source={{ uri: author.profilePhoto }} />
           <Avatar.Fallback>
-            <Paragraph>{getInitials(author.name)}</Paragraph>
+            <YStack flex={1} jc="center" ai="center">
+              <Paragraph>{getInitials(author.name)}</Paragraph>
+            </YStack>
           </Avatar.Fallback>
         </Avatar>
         <Paragraph>{author.name}</Paragraph>
