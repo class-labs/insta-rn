@@ -1,8 +1,11 @@
 import React, { ReactNode } from "react";
 import { TamaguiProvider, Theme } from "tamagui";
 import { useFonts } from "expo-font";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import config from "./config/tamagui.config";
+
+const queryClient = new QueryClient();
 
 export function RootProvider(props: { children: ReactNode }) {
   const [fontsLoaded] = useFonts({
@@ -14,7 +17,11 @@ export function RootProvider(props: { children: ReactNode }) {
   }
   return (
     <TamaguiProvider config={config} disableInjectCSS>
-      <Theme name="light">{props.children}</Theme>
+      <Theme name="light">
+        <QueryClientProvider client={queryClient}>
+          {props.children}
+        </QueryClientProvider>
+      </Theme>
     </TamaguiProvider>
   );
 }
