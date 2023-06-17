@@ -25,8 +25,9 @@ export function PostDetails() {
   const postId = pathname.split("/").pop() ?? "";
   const queryClient = useQueryClient();
   const { mutate: likePost } = useMutation(sendLikePost, {
-    onSuccess: (post) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["post", postId] });
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
     },
     onError: (error) => {
       Alert.alert("Error", String(error));
