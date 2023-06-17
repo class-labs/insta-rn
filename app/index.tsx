@@ -1,6 +1,6 @@
 import { Pressable } from "react-native";
 import { Stack, useRouter } from "expo-router";
-import { Plus as IconPlus } from "@tamagui/lucide-icons";
+import { Plus as IconPlus, LogIn as IconLogIn } from "@tamagui/lucide-icons";
 import { HomeFeed } from "../src/components/HomeFeed";
 import { useAuth } from "../src/support/Auth";
 
@@ -28,7 +28,7 @@ export default () => {
                   }
                 }}
               >
-                <IconPlus />
+                {isLoggedIn ? <IconPlus /> : <IconLogIn />}
               </Pressable>
             );
           },
