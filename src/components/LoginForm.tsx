@@ -43,10 +43,7 @@ export function LoginForm() {
           onChangeText={(value) => setUsername(value)}
           autoCapitalize="none"
           autoCorrect={false}
-          returnKeyType="next"
-          onSubmitEditing={() => {
-            // TODO: Focus the password field
-          }}
+          returnKeyType="done"
           placeholder="Enter your username"
         />
       </YStack>
