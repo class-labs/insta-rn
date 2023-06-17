@@ -1,4 +1,4 @@
-import { Pressable } from "react-native";
+import { Alert, Pressable } from "react-native";
 import { Avatar, Image, Paragraph, XStack, YStack } from "tamagui";
 import {
   Heart as IconHeart,
@@ -7,6 +7,8 @@ import {
 import { getInitials } from "../support/getInitials";
 import { FeedPost } from "../types/FeedPost";
 import { formatRelativeTime } from "../support/formatRelativeTime";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { sendLikePost } from "../api/sendLikePost";
 
 type Props = {
   post: FeedPost;
@@ -14,6 +16,15 @@ type Props = {
 
 export function FeedPostItem(props: Props) {
   const { post } = props;
+  const queryClient = useQueryClient();
+  const { mutate: likePost } = useMutation(sendLikePost, {
+    onSuccess: (post) => {
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
+    },
+    onError: (error) => {
+      Alert.alert("Error", String(error));
+    },
+  });
   const {
     author,
     caption,
@@ -39,7 +50,7 @@ export function FeedPostItem(props: Props) {
       <XStack px={16} py={12} space={12}>
         <Pressable
           style={({ pressed }) => (pressed ? { opacity: 0.5 } : undefined)}
-          onPress={() => {}}
+          onPress={() => likePost(post.id)}
         >
           <IconHeart color={isLikedByViewer ? "#f7444e" : "black"} />
         </Pressable>
