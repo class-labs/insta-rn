@@ -11,27 +11,27 @@ import {
 } from "tamagui";
 import { useAuth } from "../support/Auth";
 import { useMutation } from "@tanstack/react-query";
-import { sendLogin } from "../api/sendLogin";
+import { sendSignup } from "../api/sendSignup";
 import { useRouter } from "expo-router";
 
-export function LoginForm() {
+export function SignupForm() {
   const { setAuthToken } = useAuth();
   const router = useRouter();
+  const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const { mutate: login } = useMutation(() => sendLogin(username, password), {
-    onSuccess: (data) => {
-      if (data.success) {
+  const { mutate: signup } = useMutation(
+    () => sendSignup({ name, username, password }),
+    {
+      onSuccess: (data) => {
         setAuthToken(data.token);
         router.replace("/");
-      } else {
-        Alert.alert("Login Failed", "Invalid username or password");
-      }
+      },
+      onError: (error) => {
+        Alert.alert("Error", String(error));
+      },
     },
-    onError: (error) => {
-      Alert.alert("Error", String(error));
-    },
-  });
+  );
   return (
     <YStack
       flex={1}
@@ -43,6 +43,17 @@ export function LoginForm() {
       space={20}
       backgroundColor="white"
     >
+      <YStack space={4}>
+        <Label unstyled={true}>Name</Label>
+        <Input
+          size="$4"
+          value={name}
+          onChangeText={(value) => setName(value)}
+          autoCorrect={false}
+          returnKeyType="done"
+          placeholder="Enter your name"
+        />
+      </YStack>
       <YStack space={4}>
         <Label unstyled={true}>Username</Label>
         <Input
@@ -63,21 +74,21 @@ export function LoginForm() {
           onChangeText={(value) => setPassword(value)}
           secureTextEntry={true}
           returnKeyType="go"
-          onSubmitEditing={() => login()}
+          onSubmitEditing={() => signup()}
           placeholder="Enter your password"
         />
       </YStack>
-      <Button theme="blue" onPress={() => login()}>
-        Login
+      <Button theme="blue" onPress={() => signup()}>
+        Sign Up
       </Button>
       <XStack justifyContent="center" space={4}>
-        <Paragraph>Don't have an account?</Paragraph>
+        <Paragraph>Already have an account?</Paragraph>
         <Anchor
           color="#2f6ad5"
-          href="/signup"
-          onPress={() => router.replace("/signup")}
+          href="/login"
+          onPress={() => router.replace("/login")}
         >
-          Sign up
+          Log in
         </Anchor>
       </XStack>
     </YStack>
