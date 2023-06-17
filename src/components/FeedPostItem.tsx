@@ -1,15 +1,15 @@
 import { Alert, Pressable } from "react-native";
-import { Avatar, Image, Paragraph, XStack, YStack } from "tamagui";
+import { Image, Paragraph, XStack, YStack } from "tamagui";
 import {
   Heart as IconHeart,
   MessageSquare as IconMessageSquare,
 } from "@tamagui/lucide-icons";
-import { getInitials } from "../support/getInitials";
 import { FeedPost } from "../types/FeedPost";
 import { formatRelativeTime } from "../support/formatRelativeTime";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { sendLikePost } from "../api/sendLikePost";
 import { useRouter } from "expo-router";
+import { UserAvatar } from "./UserAvatar";
 
 type Props = {
   post: FeedPost;
@@ -39,14 +39,7 @@ export function FeedPostItem(props: Props) {
     <Pressable onPress={() => router.push(`/posts/${post.id}`)}>
       <YStack>
         <XStack px={16} py={12} alignItems="center" space={8}>
-          <Avatar circular size="$4">
-            <Avatar.Image source={{ uri: author.profilePhoto }} />
-            <Avatar.Fallback>
-              <YStack flex={1} jc="center" ai="center">
-                <Paragraph>{getInitials(author.name)}</Paragraph>
-              </YStack>
-            </Avatar.Fallback>
-          </Avatar>
+          <UserAvatar user={author} />
           <Paragraph>{author.name}</Paragraph>
         </XStack>
         <Image
