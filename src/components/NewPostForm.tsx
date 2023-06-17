@@ -1,19 +1,12 @@
 import { useState } from "react";
-import { Alert, KeyboardAvoidingView, Pressable } from "react-native";
-import {
-  Button,
-  Image,
-  Spinner,
-  Paragraph,
-  TextArea,
-  YStack,
-  ScrollView,
-} from "tamagui";
+import { Alert, KeyboardAvoidingView, Modal, Pressable } from "react-native";
+import { Button, Image, Spinner, TextArea, YStack, ScrollView } from "tamagui";
 import * as ImagePicker from "expo-image-picker";
 import { useRouter } from "expo-router";
 import { useMutation } from "@tanstack/react-query";
 import { uploadImage } from "../api/uploadImage";
 import { sendCreatePost } from "../api/sendCreatePost";
+import { CameraView } from "./CameraView";
 
 type ImageSelection =
   | { state: "none" }
@@ -39,6 +32,7 @@ export function NewPostForm() {
       Alert.alert(String(error));
     },
   });
+  const [isCameraOpen, setCameraOpen] = useState(false);
   const [imageSelection, setImageSelection] = useState<ImageSelection>({
     state: "none",
   });
@@ -60,19 +54,37 @@ export function NewPostForm() {
     }
   };
 
+  const openCamera = async () => {
+    setCameraOpen(true);
+  };
+
   return (
-    <ScrollView
-      flex={1}
-      backgroundColor="white"
-      keyboardDismissMode="interactive"
-      keyboardShouldPersistTaps="never"
-    >
-      <KeyboardAvoidingView behavior="position">
-        <YStack space={12}>
-          <Pressable
-            style={({ pressed }) => (pressed ? { opacity: 0.5 } : undefined)}
-            onPress={() => openImagePicker()}
-          >
+    <>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={isCameraOpen}
+        onRequestClose={() => {
+          setCameraOpen(false);
+        }}
+      >
+        <CameraView
+          onSuccess={(result) => {
+            setImageSelection({ state: "uploading" });
+            startUpload(result.uri);
+            setCameraOpen(false);
+          }}
+          onCancel={() => setCameraOpen(false)}
+        />
+      </Modal>
+      <ScrollView
+        flex={1}
+        backgroundColor="white"
+        keyboardDismissMode="interactive"
+        keyboardShouldPersistTaps="never"
+      >
+        <KeyboardAvoidingView behavior="position">
+          <YStack space={12}>
             <YStack
               aspectRatio={1}
               backgroundColor="#eee"
@@ -81,36 +93,69 @@ export function NewPostForm() {
             >
               {imageSelection.state === "uploaded" ? (
                 <YStack alignSelf="stretch">
-                  <Image source={{ uri: imageSelection.url }} aspectRatio={1} />
+                  <Pressable
+                    style={({ pressed }) =>
+                      pressed ? { opacity: 0.5 } : undefined
+                    }
+                    onPress={() => {
+                      Alert.alert(
+                        "Change Photo",
+                        "Choose an option to open the camera or photo library.",
+                        [
+                          {
+                            text: "Camera",
+                            onPress: () => openCamera(),
+                          },
+                          {
+                            text: "Photo Library",
+                            onPress: () => openImagePicker(),
+                          },
+                        ],
+                        { cancelable: false },
+                      );
+                    }}
+                  >
+                    <Image
+                      source={{ uri: imageSelection.url }}
+                      aspectRatio={1}
+                    />
+                  </Pressable>
                 </YStack>
               ) : imageSelection.state === "uploading" ? (
                 <Spinner size="large" />
               ) : (
-                <Paragraph>Press to choose an image</Paragraph>
+                <YStack alignItems="center" space={8}>
+                  <Button theme="blue" onPress={() => openCamera()}>
+                    Camera
+                  </Button>
+                  <Button theme="blue" onPress={() => openImagePicker()}>
+                    Photo Library
+                  </Button>
+                </YStack>
               )}
             </YStack>
-          </Pressable>
-          <YStack px={16} space={12}>
-            <TextArea
-              h={120}
-              placeholder="Enter caption"
-              value={caption}
-              onChangeText={(value) => setCaption(value)}
-            />
-            <Button
-              theme="blue"
-              disabled={imageSelection.state !== "uploaded" || isLoading}
-              onPress={() => {
-                if (imageSelection.state === "uploaded") {
-                  createPost({ photo: imageSelection.url, caption });
-                }
-              }}
-            >
-              {isLoading ? "Saving..." : "Submit"}
-            </Button>
+            <YStack px={16} space={12}>
+              <TextArea
+                h={120}
+                placeholder="Enter caption"
+                value={caption}
+                onChangeText={(value) => setCaption(value)}
+              />
+              <Button
+                theme="blue"
+                disabled={imageSelection.state !== "uploaded" || isLoading}
+                onPress={() => {
+                  if (imageSelection.state === "uploaded") {
+                    createPost({ photo: imageSelection.url, caption });
+                  }
+                }}
+              >
+                {isLoading ? "Saving..." : "Submit"}
+              </Button>
+            </YStack>
           </YStack>
-        </YStack>
-      </KeyboardAvoidingView>
-    </ScrollView>
+        </KeyboardAvoidingView>
+      </ScrollView>
+    </>
   );
 }
