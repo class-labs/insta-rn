@@ -10,5 +10,6 @@ export type Post = {
   caption: string;
   likedBy: Array<string>;
   comments: Array<string>;
+  isLikedByViewer: boolean;
   createdAt: string;
 };
