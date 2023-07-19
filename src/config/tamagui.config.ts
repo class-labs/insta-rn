@@ -59,7 +59,15 @@ const config = createTamagui({
     heading: headingFont,
     body: bodyFont,
   },
-  themes,
+  themes: {
+    ...themes,
+    // Overrides for light mode, button with theme="blue"
+    light_blue_Button: {
+      ...themes.light_blue_Button,
+      background: "#2F6AD5",
+      color: "white",
+    },
+  },
   tokens,
   media: createMedia({
     xs: { maxWidth: 660 },

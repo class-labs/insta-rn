@@ -1,16 +1,18 @@
 import { Stack } from "expo-router";
-import { Button, YStack } from "tamagui";
+import { Paragraph } from "tamagui";
+import { useQuery } from "@tanstack/react-query";
+import { getPosts } from "../src/api/getPosts";
+import { HomeFeed } from "../src/components/HomeFeed";
 
 export default () => {
+  const { data, error } = useQuery(["posts"], getPosts);
+  if (error) {
+    return <Paragraph>{String(error)}</Paragraph>;
+  }
   return (
-    <YStack
-      flex={1}
-      justifyContent="center"
-      alignItems="center"
-      backgroundColor="#ddf"
-    >
+    <>
       <Stack.Screen options={{ title: "Home" }} />
-      <Button>Click Me</Button>
-    </YStack>
+      {!data ? <Paragraph>Loading...</Paragraph> : <HomeFeed posts={data} />}
+    </>
   );
 };
