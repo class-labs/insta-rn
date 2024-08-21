@@ -3,6 +3,7 @@ export type RootStackParamList = {
   NewPost: undefined;
   PostDetails: { postId: string };
   Login: undefined;
+  Signup: undefined;
 };
 
 declare global {

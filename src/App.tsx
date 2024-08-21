@@ -13,6 +13,7 @@ import { AppProvider } from "./providers/AppProvider";
 import { HomeScreen } from "./screens/HomeScreen";
 import { LoginScreen } from "./screens/LoginScreen";
 import { PostDetailsScreen } from "./screens/PostDetailsScreen";
+import { SignupScreen } from "./screens/SignupScreen";
 import { useAuth } from "./support/Auth";
 import { RootStackParamList } from "./types/RootStackParamList";
 
@@ -44,6 +45,7 @@ function ThemedNavigationContainer() {
         />
         <Stack.Screen name="PostDetails" component={PostDetailsScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Signup" component={SignupScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
