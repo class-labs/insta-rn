@@ -9,6 +9,10 @@ async function getPosts() {
   return jsonData as Array<Post>;
 }
 
+// Task 2
+// Remove the button. Instead automatically fetch the posts when the screen loads.
+// Use react-query to to this.
+// Hint: const { isLoading, error, data } = useQuery(["getPosts"], getPosts);
 export function HomeScreen() {
   const [posts, setPosts] = useState<Array<Post>>([]);
   return (
