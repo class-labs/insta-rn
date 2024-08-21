@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 
+import { AuthProvider } from "../support/Auth";
 import { FontProvider } from "./FontProvider";
 import { ReactQueryProvider } from "./ReactQueryProvider";
 import { ThemeProvider } from "./ThemeProvider";
@@ -13,7 +14,9 @@ export function AppProvider(props: Props) {
   return (
     <FontProvider>
       <ThemeProvider>
-        <ReactQueryProvider>{children}</ReactQueryProvider>
+        <AuthProvider>
+          <ReactQueryProvider>{children}</ReactQueryProvider>
+        </AuthProvider>
       </ThemeProvider>
     </FontProvider>
   );
