@@ -1,18 +1,11 @@
-import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Button, Paragraph, Spinner, View } from "tamagui";
+import { Paragraph, Spinner, View } from "tamagui";
 
-import { Post } from "../types/Post";
+import { getPosts } from "../api/getPosts";
 
-async function getPosts() {
-  const response = await fetch("https://insta-api.web-api.dev/posts");
-  if (response.status !== 200) {
-    throw new Error(`Unexpected response status ${response.status}`);
-  }
-  const jsonData = await response.json();
-  return jsonData as Array<Post>;
-}
-
+// Task 3
+// Display the image for each post. Use aspectRatio={1} to make it square.
+// You should wrap your list in a ScrollView
 export function HomeScreen() {
   const { isLoading, error, data } = useQuery(["getPosts"], getPosts);
 
