@@ -1,27 +1,40 @@
-import { useState } from "react";
-import { Button, Paragraph, View } from "tamagui";
+import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { Button, Paragraph, Spinner, View } from "tamagui";
 
 import { Post } from "../types/Post";
 
 async function getPosts() {
   const response = await fetch("https://insta-api.web-api.dev/posts");
+  if (response.status !== 200) {
+    throw new Error(`Unexpected response status ${response.status}`);
+  }
   const jsonData = await response.json();
   return jsonData as Array<Post>;
 }
 
 export function HomeScreen() {
-  const [posts, setPosts] = useState<Array<Post>>([]);
+  const { isLoading, error, data } = useQuery(["getPosts"], getPosts);
+
+  if (error) {
+    return (
+      <View padding={20} alignItems="center">
+        <Paragraph>{String(error)}</Paragraph>
+      </View>
+    );
+  }
+
+  if (isLoading || !data) {
+    return (
+      <View padding={20} alignItems="center">
+        <Spinner />
+      </View>
+    );
+  }
+
   return (
     <View padding={20} gap={20}>
-      <Button
-        onPress={async () => {
-          const posts = await getPosts();
-          setPosts(posts);
-        }}
-      >
-        Click to get posts
-      </Button>
-      {posts.map((post) => {
+      {data.map((post) => {
         return <Paragraph key={post.id}>{post.caption}</Paragraph>;
       })}
     </View>
