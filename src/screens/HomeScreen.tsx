@@ -1,11 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import { Paragraph, Spinner, View } from "tamagui";
+import { Image, Paragraph, ScrollView, Spinner, View } from "tamagui";
 
 import { getPosts } from "../api/getPosts";
 
-// Task 3
-// Display the image for each post. Use aspectRatio={1} to make it square.
-// You should wrap your list in a ScrollView
 export function HomeScreen() {
   const { isLoading, error, data } = useQuery(["getPosts"], getPosts);
 
@@ -26,10 +23,17 @@ export function HomeScreen() {
   }
 
   return (
-    <View padding={20} gap={20}>
-      {data.map((post) => {
-        return <Paragraph key={post.id}>{post.caption}</Paragraph>;
-      })}
-    </View>
+    <ScrollView>
+      <View gap={20}>
+        {data.map((post) => {
+          return (
+            <View key={post.id}>
+              <Image aspectRatio={1} source={{ uri: post.photo }} />
+              <Paragraph paddingHorizontal={20}>{post.caption}</Paragraph>
+            </View>
+          );
+        })}
+      </View>
+    </ScrollView>
   );
 }

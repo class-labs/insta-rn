@@ -10,6 +10,7 @@ import { useTheme } from "tamagui";
 import { AppProvider } from "./providers/AppProvider";
 import { HomeScreen } from "./screens/HomeScreen";
 import { LoginScreen } from "./screens/LoginScreen";
+import { PostDetailsScreen } from "./screens/PostDetailsScreen";
 import { RootStackParamList } from "./types/RootStackParamList";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -32,6 +33,7 @@ function ThemedNavigationContainer() {
         }}
       >
         <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="PostDetails" component={PostDetailsScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
       </Stack.Navigator>
     </NavigationContainer>
