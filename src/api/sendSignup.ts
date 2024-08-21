@@ -20,6 +20,7 @@ export async function sendSignup(payload: {
       password,
     }),
   });
+  // TODO: Check response status
   // @ts-expect-error
   const result: SignupResult = await response.json();
   return result;

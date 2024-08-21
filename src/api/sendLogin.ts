@@ -11,6 +11,7 @@ export async function sendLogin(username: string, password: string) {
     headers: { "content-type": "application/json" },
     body: JSON.stringify({ username, password }),
   });
+  // TODO: Check response status
   // @ts-expect-error
   const result: LoginResult = await response.json();
   return result;
