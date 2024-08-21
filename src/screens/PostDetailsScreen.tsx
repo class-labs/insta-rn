@@ -22,9 +22,12 @@ import { getPost } from "../api/getPost";
 import { sendCreateComment } from "../api/sendCreateComment";
 import { sendLikePost } from "../api/sendLikePost";
 import { UserAvatar } from "../components/UserAvatar";
+import { useAuth } from "../support/Auth";
 import { formatRelativeTime } from "../support/formatRelativeTime";
 
 export function PostDetailsScreen() {
+  const { authToken } = useAuth();
+  const isLoggedIn = authToken !== null;
   const route = useRoute();
   const params = Object(route.params);
   const postId = String(params.postId);
@@ -82,22 +85,26 @@ export function PostDetailsScreen() {
           <Paragraph>{author.name}</Paragraph>
         </XStack>
         <Image source={{ uri: photo }} aspectRatio={1} resizeMode="cover" />
-        <XStack px={16} py={12} gap={12}>
-          <Pressable
-            style={({ pressed }) => (pressed ? { opacity: 0.5 } : undefined)}
-            onPress={() => likePost(id)}
-          >
-            <IconHeart color={isLikedByViewer ? "#f7444e" : undefined} />
-          </Pressable>
-          <Pressable
-            style={({ pressed }) => (pressed ? { opacity: 0.5 } : undefined)}
-            onPress={() => {
-              // TODO
-            }}
-          >
-            <IconMessageSquare />
-          </Pressable>
-        </XStack>
+        {isLoggedIn ? (
+          <XStack px={16} py={12} gap={12}>
+            <Pressable
+              style={({ pressed }) => (pressed ? { opacity: 0.5 } : undefined)}
+              onPress={() => likePost(id)}
+            >
+              <IconHeart color={isLikedByViewer ? "#f7444e" : undefined} />
+            </Pressable>
+            <Pressable
+              style={({ pressed }) => (pressed ? { opacity: 0.5 } : undefined)}
+              onPress={() => {
+                // TODO
+              }}
+            >
+              <IconMessageSquare />
+            </Pressable>
+          </XStack>
+        ) : (
+          <XStack h={16} />
+        )}
         <YStack px={16} pb={12} gap={8}>
           <Paragraph fontWeight="600">
             {likeCount === 1 ? "1 like" : `${likeCount.toLocaleString()} likes`}
@@ -121,42 +128,48 @@ export function PostDetailsScreen() {
             </XStack>
           ))}
         </YStack>
-        <View height={1} backgroundColor="#e8e8e8" />
-        <XStack
-          alignItems="center"
-          gap={12}
-          px={16}
-          pt={12}
-          pb={Math.max(insets.bottom, 12)}
-        >
-          <Input
-            size="$4"
-            flex={1}
-            value={newComment}
-            onChangeText={(value) => setNewComment(value)}
-            autoFocus={params.intent === "comment"}
-            disabled={isSavingComment}
-            returnKeyType="go"
-            onSubmitEditing={() => {
-              if (!isSavingComment) {
-                createComment(newComment);
-              }
-            }}
-            placeholder="Comment"
-          />
-          <Pressable
-            style={({ pressed }) => (pressed ? { opacity: 0.5 } : undefined)}
-            onPress={() => {
-              if (!isSavingComment) {
-                createComment(newComment);
-              }
-            }}
-          >
-            <View mt={2}>
-              <IconSend />
-            </View>
-          </Pressable>
-        </XStack>
+        {isLoggedIn ? (
+          <>
+            <View height={1} backgroundColor="#e8e8e8" />
+            <XStack
+              alignItems="center"
+              gap={12}
+              px={16}
+              pt={12}
+              pb={Math.max(insets.bottom, 12)}
+            >
+              <Input
+                size="$4"
+                flex={1}
+                value={newComment}
+                onChangeText={(value) => setNewComment(value)}
+                autoFocus={params.intent === "comment"}
+                disabled={isSavingComment}
+                returnKeyType="go"
+                onSubmitEditing={() => {
+                  if (!isSavingComment) {
+                    createComment(newComment);
+                  }
+                }}
+                placeholder="Comment"
+              />
+              <Pressable
+                style={({ pressed }) =>
+                  pressed ? { opacity: 0.5 } : undefined
+                }
+                onPress={() => {
+                  if (!isSavingComment) {
+                    createComment(newComment);
+                  }
+                }}
+              >
+                <View mt={2}>
+                  <IconSend />
+                </View>
+              </Pressable>
+            </XStack>
+          </>
+        ) : null}
       </KeyboardAvoidingView>
     </ScrollView>
   );

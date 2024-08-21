@@ -8,6 +8,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Image, Paragraph, XStack, YStack } from "tamagui";
 
 import { sendLikePost } from "../api/sendLikePost";
+import { useAuth } from "../support/Auth";
 import { formatRelativeTime } from "../support/formatRelativeTime";
 import { FeedPost } from "../types/FeedPost";
 import { UserAvatar } from "./UserAvatar";
@@ -18,6 +19,8 @@ type Props = {
 
 export function FeedPostItem(props: Props) {
   const { post } = props;
+  const { authToken } = useAuth();
+  const isLoggedIn = authToken !== null;
   const navigation = useNavigation();
   const queryClient = useQueryClient();
   const { mutate: likePost } = useMutation(sendLikePost, {
@@ -50,25 +53,29 @@ export function FeedPostItem(props: Props) {
           aspectRatio={1}
           resizeMode="cover"
         />
-        <XStack px={16} py={12} gap={12}>
-          <Pressable
-            style={({ pressed }) => (pressed ? { opacity: 0.5 } : undefined)}
-            onPress={() => likePost(post.id)}
-          >
-            <IconHeart color={isLikedByViewer ? "#f7444e" : undefined} />
-          </Pressable>
-          <Pressable
-            style={({ pressed }) => (pressed ? { opacity: 0.5 } : undefined)}
-            onPress={() => {
-              navigation.navigate("PostDetails", {
-                postId: post.id,
-                intent: "comment",
-              });
-            }}
-          >
-            <IconMessageSquare />
-          </Pressable>
-        </XStack>
+        {isLoggedIn ? (
+          <XStack px={16} py={12} gap={12}>
+            <Pressable
+              style={({ pressed }) => (pressed ? { opacity: 0.5 } : undefined)}
+              onPress={() => likePost(post.id)}
+            >
+              <IconHeart color={isLikedByViewer ? "#f7444e" : undefined} />
+            </Pressable>
+            <Pressable
+              style={({ pressed }) => (pressed ? { opacity: 0.5 } : undefined)}
+              onPress={() => {
+                navigation.navigate("PostDetails", {
+                  postId: post.id,
+                  intent: "comment",
+                });
+              }}
+            >
+              <IconMessageSquare />
+            </Pressable>
+          </XStack>
+        ) : (
+          <XStack h={16} />
+        )}
         <YStack px={16} pb={12} gap={8}>
           <Paragraph fontWeight="600">
             {likeCount === 1 ? "1 like" : `${likeCount.toLocaleString()} likes`}
