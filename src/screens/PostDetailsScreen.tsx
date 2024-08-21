@@ -21,10 +21,10 @@ import {
 import { getPost } from "../api/getPost";
 import { sendCreateComment } from "../api/sendCreateComment";
 import { sendLikePost } from "../api/sendLikePost";
+import { UserAvatar } from "../components/UserAvatar";
 import { formatRelativeTime } from "../support/formatRelativeTime";
-import { UserAvatar } from "./UserAvatar";
 
-export function PostDetails() {
+export function PostDetailsScreen() {
   const route = useRoute();
   const params = Object(route.params);
   const postId = String(params.postId);
