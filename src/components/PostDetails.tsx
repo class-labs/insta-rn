@@ -77,12 +77,12 @@ export function PostDetails() {
       keyboardShouldPersistTaps="never"
     >
       <KeyboardAvoidingView behavior="position">
-        <XStack px={16} py={12} alignItems="center" space={8}>
+        <XStack px={16} py={12} alignItems="center" gap={8}>
           <UserAvatar user={author} />
           <Paragraph>{author.name}</Paragraph>
         </XStack>
         <Image source={{ uri: photo }} aspectRatio={1} resizeMode="cover" />
-        <XStack px={16} py={12} space={12}>
+        <XStack px={16} py={12} gap={12}>
           <Pressable
             style={({ pressed }) => (pressed ? { opacity: 0.5 } : undefined)}
             onPress={() => likePost(id)}
@@ -98,17 +98,17 @@ export function PostDetails() {
             <IconMessageSquare />
           </Pressable>
         </XStack>
-        <YStack px={16} pb={12} space={8}>
+        <YStack px={16} pb={12} gap={8}>
           <Paragraph fontWeight="600">
             {likeCount === 1 ? "1 like" : `${likeCount.toLocaleString()} likes`}
           </Paragraph>
           <Paragraph opacity={0.8}>{caption}</Paragraph>
         </YStack>
         <View height={1} backgroundColor="#e8e8e8" />
-        <YStack px={16} pt={16} pb={12} space={12}>
+        <YStack px={16} pt={16} pb={12} gap={12}>
           <Paragraph fontSize={14}>Comments ({comments.length})</Paragraph>
           {comments.map((comment) => (
-            <XStack key={comment.id} space={10}>
+            <XStack key={comment.id} gap={10}>
               <UserAvatar user={comment.author} size="sm" />
               <YStack>
                 <Paragraph
@@ -124,7 +124,7 @@ export function PostDetails() {
         <View height={1} backgroundColor="#e8e8e8" />
         <XStack
           alignItems="center"
-          space={12}
+          gap={12}
           px={16}
           pt={12}
           pb={Math.max(insets.bottom, 12)}
