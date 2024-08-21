@@ -54,6 +54,7 @@ export function LoginScreen() {
           autoCorrect={false}
           returnKeyType="done"
           placeholder="Enter your username"
+          autoFocus={true}
         />
       </YStack>
       <YStack gap={4}>

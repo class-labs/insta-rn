@@ -53,6 +53,7 @@ export function SignupScreen() {
           autoCorrect={false}
           returnKeyType="done"
           placeholder="Enter your name"
+          autoFocus={true}
         />
       </YStack>
       <YStack gap={4}>
