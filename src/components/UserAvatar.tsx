@@ -1,4 +1,4 @@
-import { Avatar, Paragraph, YStack } from "tamagui";
+import { Avatar, Paragraph, View } from "tamagui";
 
 import { getInitials } from "../support/getInitials";
 import { User } from "../types/User";
@@ -15,9 +15,9 @@ export function UserAvatar(props: Props) {
     <Avatar circular size={size === "sm" ? "$3" : "$4"}>
       {profilePhoto ? <Avatar.Image source={{ uri: profilePhoto }} /> : null}
       <Avatar.Fallback>
-        <YStack flex={1} jc="center" ai="center" backgroundColor="#e8e8e8">
+        <View flex={1} jc="center" ai="center" backgroundColor="#e8e8e8">
           <Paragraph>{getInitials(name)}</Paragraph>
-        </YStack>
+        </View>
       </Avatar.Fallback>
     </Avatar>
   );

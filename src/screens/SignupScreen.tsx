@@ -2,15 +2,7 @@ import { useState } from "react";
 import { Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useMutation } from "@tanstack/react-query";
-import {
-  Anchor,
-  Button,
-  Input,
-  Label,
-  Paragraph,
-  XStack,
-  YStack,
-} from "tamagui";
+import { Anchor, Button, Input, Label, Paragraph, View } from "tamagui";
 
 import { sendSignup } from "../api/sendSignup";
 import { useAuth } from "../support/Auth";
@@ -35,7 +27,7 @@ export function SignupScreen() {
     },
   );
   return (
-    <YStack
+    <View
       flex={1}
       justifyContent="flex-start"
       alignItems="stretch"
@@ -44,7 +36,7 @@ export function SignupScreen() {
       pb={24}
       gap={20}
     >
-      <YStack gap={4}>
+      <View gap={4}>
         <Label>Name</Label>
         <Input
           size="$4"
@@ -55,8 +47,8 @@ export function SignupScreen() {
           placeholder="Enter your name"
           autoFocus={true}
         />
-      </YStack>
-      <YStack gap={4}>
+      </View>
+      <View gap={4}>
         <Label>Username</Label>
         <Input
           size="$4"
@@ -67,8 +59,8 @@ export function SignupScreen() {
           returnKeyType="done"
           placeholder="Enter your username"
         />
-      </YStack>
-      <YStack gap={4}>
+      </View>
+      <View gap={4}>
         <Label>Password</Label>
         <Input
           size="$4"
@@ -79,11 +71,11 @@ export function SignupScreen() {
           onSubmitEditing={() => signup()}
           placeholder="Enter your password"
         />
-      </YStack>
+      </View>
       <Button theme="blue" onPress={() => signup()}>
         Sign Up
       </Button>
-      <XStack justifyContent="center" gap={4}>
+      <View flexDirection="row" justifyContent="center" gap={4}>
         <Paragraph>Already have an account?</Paragraph>
         <Anchor
           color="#2f6ad5"
@@ -94,7 +86,7 @@ export function SignupScreen() {
         >
           Log in
         </Anchor>
-      </XStack>
-    </YStack>
+      </View>
+    </View>
   );
 }

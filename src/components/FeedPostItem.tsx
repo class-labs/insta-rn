@@ -5,7 +5,7 @@ import {
   MessageSquare as IconMessageSquare,
 } from "@tamagui/lucide-icons";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Image, Paragraph, XStack, YStack } from "tamagui";
+import { Image, Paragraph, View } from "tamagui";
 
 import { sendLikePost } from "../api/sendLikePost";
 import { useAuth } from "../support/Auth";
@@ -42,18 +42,14 @@ export function FeedPostItem(props: Props) {
     <Pressable
       onPress={() => navigation.navigate("PostDetails", { postId: post.id })}
     >
-      <YStack>
-        <XStack px={16} py={12} alignItems="center" gap={8}>
+      <View>
+        <View flexDirection="row" px={16} py={12} alignItems="center" gap={8}>
           <UserAvatar user={author} />
           <Paragraph>{author.name}</Paragraph>
-        </XStack>
-        <Image
-          source={{ uri: post.photo }}
-          aspectRatio={1}
-          resizeMode="cover"
-        />
+        </View>
+        <Image source={{ uri: post.photo }} aspectRatio={1} objectFit="cover" />
         {isLoggedIn ? (
-          <XStack px={16} py={12} gap={12}>
+          <View flexDirection="row" px={16} py={12} gap={12}>
             <Pressable
               style={({ pressed }) => (pressed ? { opacity: 0.5 } : undefined)}
               onPress={() => likePost(post.id)}
@@ -71,11 +67,11 @@ export function FeedPostItem(props: Props) {
             >
               <IconMessageSquare />
             </Pressable>
-          </XStack>
+          </View>
         ) : (
-          <XStack h={16} />
+          <View h={16} />
         )}
-        <YStack px={16} pb={12} gap={8}>
+        <View px={16} pb={12} gap={8}>
           <Paragraph fontWeight="600">
             {likeCount === 1 ? "1 like" : `${likeCount.toLocaleString()} likes`}
           </Paragraph>
@@ -86,8 +82,8 @@ export function FeedPostItem(props: Props) {
               : `View ${commentCount.toLocaleString()} comments`}
           </Paragraph>
           <Paragraph opacity={0.4}>{formatRelativeTime(createdAt)}</Paragraph>
-        </YStack>
-      </YStack>
+        </View>
+      </View>
     </Pressable>
   );
 }

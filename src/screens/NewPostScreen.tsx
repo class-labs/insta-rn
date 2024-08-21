@@ -9,7 +9,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { useMutation } from "@tanstack/react-query";
 import * as ImagePicker from "expo-image-picker";
-import { Button, Image, ScrollView, Spinner, TextArea, YStack } from "tamagui";
+import { Button, Image, ScrollView, Spinner, TextArea, View } from "tamagui";
 
 import { sendCreatePost } from "../api/sendCreatePost";
 import { uploadImage } from "../api/uploadImage";
@@ -92,8 +92,8 @@ export function NewPostScreen() {
         keyboardShouldPersistTaps="never"
       >
         <KeyboardAvoidingView behavior="position">
-          <YStack gap={12}>
-            <YStack
+          <View gap={12}>
+            <View
               aspectRatio={1}
               backgroundColor={
                 colorScheme === "dark" ? "rgba(255, 255, 255, 0.06)" : "#eee"
@@ -102,7 +102,7 @@ export function NewPostScreen() {
               alignItems="center"
             >
               {imageSelection.state === "uploaded" ? (
-                <YStack alignSelf="stretch">
+                <View alignSelf="stretch">
                   <Pressable
                     style={({ pressed }) =>
                       pressed ? { opacity: 0.5 } : undefined
@@ -130,21 +130,21 @@ export function NewPostScreen() {
                       aspectRatio={1}
                     />
                   </Pressable>
-                </YStack>
+                </View>
               ) : imageSelection.state === "uploading" ? (
                 <Spinner size="large" />
               ) : (
-                <YStack alignItems="center" gap={8}>
+                <View alignItems="center" gap={8}>
                   <Button theme="blue" onPress={() => openCamera()}>
                     Camera
                   </Button>
                   <Button theme="blue" onPress={() => openImagePicker()}>
                     Photo Library
                   </Button>
-                </YStack>
+                </View>
               )}
-            </YStack>
-            <YStack px={16} gap={12}>
+            </View>
+            <View px={16} gap={12}>
               <TextArea
                 h={120}
                 placeholder="Enter caption"
@@ -162,8 +162,8 @@ export function NewPostScreen() {
               >
                 {isLoading ? "Saving..." : "Submit"}
               </Button>
-            </YStack>
-          </YStack>
+            </View>
+          </View>
         </KeyboardAvoidingView>
       </ScrollView>
     </>

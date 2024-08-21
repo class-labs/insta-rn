@@ -2,15 +2,7 @@ import { useState } from "react";
 import { Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useMutation } from "@tanstack/react-query";
-import {
-  Anchor,
-  Button,
-  Input,
-  Label,
-  Paragraph,
-  XStack,
-  YStack,
-} from "tamagui";
+import { Anchor, Button, Input, Label, Paragraph, View } from "tamagui";
 
 import { sendLogin } from "../api/sendLogin";
 import { useAuth } from "../support/Auth";
@@ -35,7 +27,7 @@ export function LoginScreen() {
     },
   });
   return (
-    <YStack
+    <View
       flex={1}
       justifyContent="flex-start"
       alignItems="stretch"
@@ -44,7 +36,7 @@ export function LoginScreen() {
       pb={24}
       gap={20}
     >
-      <YStack gap={4}>
+      <View gap={4}>
         <Label>Username</Label>
         <Input
           size="$4"
@@ -56,8 +48,8 @@ export function LoginScreen() {
           placeholder="Enter your username"
           autoFocus={true}
         />
-      </YStack>
-      <YStack gap={4}>
+      </View>
+      <View gap={4}>
         <Label>Password</Label>
         <Input
           size="$4"
@@ -68,11 +60,11 @@ export function LoginScreen() {
           onSubmitEditing={() => login()}
           placeholder="Enter your password"
         />
-      </YStack>
+      </View>
       <Button theme="blue" onPress={() => login()}>
         Login
       </Button>
-      <XStack justifyContent="center" gap={4}>
+      <View flexDirection="row" justifyContent="center" gap={4}>
         <Paragraph>Don't have an account?</Paragraph>
         <Anchor
           color="#2f6ad5"
@@ -83,7 +75,7 @@ export function LoginScreen() {
         >
           Sign up
         </Anchor>
-      </XStack>
-    </YStack>
+      </View>
+    </View>
   );
 }

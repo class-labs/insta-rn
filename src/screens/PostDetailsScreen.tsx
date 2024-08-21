@@ -8,15 +8,7 @@ import {
 } from "@tamagui/lucide-icons";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import {
-  Image,
-  Input,
-  Paragraph,
-  ScrollView,
-  View,
-  XStack,
-  YStack,
-} from "tamagui";
+import { Image, Input, Paragraph, ScrollView, View } from "tamagui";
 
 import { getPost } from "../api/getPost";
 import { sendCreateComment } from "../api/sendCreateComment";
@@ -79,13 +71,13 @@ export function PostDetailsScreen() {
       keyboardShouldPersistTaps="never"
     >
       <KeyboardAvoidingView behavior="position">
-        <XStack px={16} py={12} alignItems="center" gap={8}>
+        <View flexDirection="row" px={16} py={12} alignItems="center" gap={8}>
           <UserAvatar user={author} />
           <Paragraph>{author.name}</Paragraph>
-        </XStack>
+        </View>
         <Image source={{ uri: photo }} aspectRatio={1} resizeMode="cover" />
         {isLoggedIn ? (
-          <XStack px={16} py={12} gap={12}>
+          <View flexDirection="row" px={16} py={12} gap={12}>
             <Pressable
               style={({ pressed }) => (pressed ? { opacity: 0.5 } : undefined)}
               onPress={() => likePost(id)}
@@ -100,37 +92,38 @@ export function PostDetailsScreen() {
             >
               <IconMessageSquare />
             </Pressable>
-          </XStack>
+          </View>
         ) : (
-          <XStack h={16} />
+          <View flexDirection="row" h={16} />
         )}
-        <YStack px={16} pb={12} gap={8}>
+        <View px={16} pb={12} gap={8}>
           <Paragraph fontWeight="600">
             {likeCount === 1 ? "1 like" : `${likeCount.toLocaleString()} likes`}
           </Paragraph>
           <Paragraph opacity={0.8}>{caption}</Paragraph>
-        </YStack>
+        </View>
         <View height={1} backgroundColor="#e8e8e8" />
-        <YStack px={16} pt={16} pb={12} gap={12}>
+        <View px={16} pt={16} pb={12} gap={12}>
           <Paragraph fontSize={14}>Comments ({comments.length})</Paragraph>
           {comments.map((comment) => (
-            <XStack key={comment.id} gap={10}>
+            <View flexDirection="row" key={comment.id} gap={10}>
               <UserAvatar user={comment.author} size="sm" />
-              <YStack>
+              <View>
                 <Paragraph
                   fontSize={14}
                 >{`${comment.author.name}: ${comment.text}`}</Paragraph>
                 <Paragraph fontSize={12} opacity={0.4}>
                   {formatRelativeTime(comment.createdAt)}
                 </Paragraph>
-              </YStack>
-            </XStack>
+              </View>
+            </View>
           ))}
-        </YStack>
+        </View>
         {isLoggedIn ? (
           <>
             <View height={1} backgroundColor="#e8e8e8" />
-            <XStack
+            <View
+              flexDirection="row"
               alignItems="center"
               gap={12}
               px={16}
@@ -166,7 +159,7 @@ export function PostDetailsScreen() {
                   <IconSend />
                 </View>
               </Pressable>
-            </XStack>
+            </View>
           </>
         ) : null}
       </KeyboardAvoidingView>

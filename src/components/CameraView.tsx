@@ -6,7 +6,7 @@ import {
 } from "@tamagui/lucide-icons";
 import { Camera, CameraCapturedPicture, CameraType } from "expo-camera/legacy";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { Button, Paragraph, Theme, XStack, YStack } from "tamagui";
+import { Button, Paragraph, Theme, View } from "tamagui";
 
 type Props = {
   onSuccess: (result: CameraCapturedPicture) => void;
@@ -24,7 +24,7 @@ export function CameraView(props: Props) {
   }
   if (!permission.granted) {
     return (
-      <YStack
+      <View
         flex={1}
         justifyContent="center"
         alignItems="center"
@@ -34,19 +34,19 @@ export function CameraView(props: Props) {
         <Paragraph>Camera permission needed.</Paragraph>
         <Button onPress={() => requestPermission()}>Enable Camera</Button>
         <Button onPress={() => onCancel()}>Cancel</Button>
-      </YStack>
+      </View>
     );
   }
   return (
     <Theme name="dark">
-      <YStack
+      <View
         flex={1}
         backgroundColor="black"
         gap={12}
         pt={insets.top}
         pb={insets.bottom}
       >
-        <XStack p={12}>
+        <View flexDirection="row" p={12}>
           <Pressable
             style={({ pressed }) => (pressed ? { opacity: 0.5 } : undefined)}
             onPress={() => onCancel()}
@@ -62,7 +62,7 @@ export function CameraView(props: Props) {
           >
             <IconRefreshCw />
           </Pressable>
-        </XStack>
+        </View>
         <Camera
           ref={cameraRef}
           type={type}
@@ -78,7 +78,7 @@ export function CameraView(props: Props) {
             ]);
           }}
         />
-        <YStack flex={1} justifyContent="center" alignItems="center">
+        <View flex={1} justifyContent="center" alignItems="center">
           <Pressable
             onPress={async () => {
               const result = await cameraRef.current?.takePictureAsync();
@@ -87,7 +87,7 @@ export function CameraView(props: Props) {
               }
             }}
           >
-            <YStack
+            <View
               width={72}
               height={72}
               borderRadius={36}
@@ -96,8 +96,8 @@ export function CameraView(props: Props) {
               borderColor="#e8e8e8"
             />
           </Pressable>
-        </YStack>
-      </YStack>
+        </View>
+      </View>
     </Theme>
   );
 }
