@@ -1,18 +1,22 @@
-import { render } from "@testing-library/react-native";
+import { act, fireEvent, render } from "@testing-library/react-native";
 
 import { ThemeProvider } from "../providers/ThemeProvider";
 import { HomeScreen } from "../screens/HomeScreen";
 
 describe("HomeScreen", () => {
-  test("Text renders correctly on HomeScreen", () => {
-    const { getByText } = render(
+  test("Text renders correctly on HomeScreen", async () => {
+    const { getByText, getByRole } = render(
       <ThemeProvider>
         <HomeScreen />
       </ThemeProvider>,
     );
 
-    const textLabel = getByText("Hello world!");
+    const button = getByRole("button");
+    expect(button).toBeTruthy();
 
-    expect(textLabel).toBeTruthy();
+    await act(() => fireEvent.press(button));
+
+    const paragraph = getByText("Hello world!");
+    expect(paragraph).toBeTruthy();
   });
 });
