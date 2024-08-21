@@ -24,8 +24,11 @@ function format(i: number, unit: Unit) {
   return i < 0 ? `${formatted} ago` : formatted;
 }
 
-export function formatRelativeTime(date: string | Date) {
-  const ms = new Date(date).valueOf() - Date.now();
+export function formatRelativeTime(
+  fromDate: string | Date,
+  toDate: Date = new Date(),
+) {
+  const ms = new Date(fromDate).valueOf() - toDate.valueOf();
   const absoluteMs = Math.abs(ms);
   if (absoluteMs > YEAR) {
     return format(Math.round(ms / YEAR), "year");
