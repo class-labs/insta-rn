@@ -32,7 +32,7 @@ export function HomeScreen() {
             style={({ pressed }) => (pressed ? { opacity: 0.5 } : undefined)}
             onPress={() => {
               if (isLoggedIn) {
-                navigation.navigate("Compose");
+                navigation.navigate("NewPost");
               } else {
                 navigation.navigate("Login");
               }

@@ -1,6 +1,6 @@
 export type RootStackParamList = {
   Home: undefined;
-  Compose: undefined;
+  NewPost: undefined;
   Login: undefined;
   Signup: undefined;
   PostDetails: { postId: string; intent?: "comment" };

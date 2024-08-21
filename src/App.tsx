@@ -12,6 +12,7 @@ import { PostDetails } from "./components/PostDetails";
 import { SignupScreen } from "./components/SignupScreen";
 import { AppProvider } from "./providers/AppProvider";
 import { HomeScreen } from "./screens/HomeScreen";
+import { NewPostScreen } from "./screens/NewPostScreen";
 import { RootStackParamList } from "./types/RootStackParamList";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -38,6 +39,11 @@ function ThemedNavigationContainer() {
           name="PostDetails"
           options={{ title: "Post Details" }}
           component={PostDetails}
+        />
+        <Stack.Screen
+          name="NewPost"
+          options={{ title: "New Post" }}
+          component={NewPostScreen}
         />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Signup" component={SignupScreen} />
