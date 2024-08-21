@@ -1,6 +1,7 @@
 export type RootStackParamList = {
   Home: undefined;
-  PostDetails: undefined;
+  NewPost: undefined;
+  PostDetails: { postId: string };
   Login: undefined;
 };
 
