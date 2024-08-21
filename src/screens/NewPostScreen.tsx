@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { Alert, KeyboardAvoidingView, Modal, Pressable } from "react-native";
+import {
+  Alert,
+  KeyboardAvoidingView,
+  Modal,
+  Pressable,
+  useColorScheme,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useMutation } from "@tanstack/react-query";
 import * as ImagePicker from "expo-image-picker";
@@ -16,6 +22,7 @@ type ImageSelection =
 
 export function NewPostScreen() {
   const navigation = useNavigation();
+  const colorScheme = useColorScheme();
   const { mutate: startUpload } = useMutation(uploadImage, {
     onSuccess: (result) => {
       setImageSelection({ state: "uploaded", url: result.url });
@@ -81,15 +88,16 @@ export function NewPostScreen() {
       </Modal>
       <ScrollView
         flex={1}
-        backgroundColor="white"
         keyboardDismissMode="interactive"
         keyboardShouldPersistTaps="never"
       >
         <KeyboardAvoidingView behavior="position">
-          <YStack space={12}>
+          <YStack gap={12}>
             <YStack
               aspectRatio={1}
-              backgroundColor="#eee"
+              backgroundColor={
+                colorScheme === "dark" ? "rgba(255, 255, 255, 0.06)" : "#eee"
+              }
               justifyContent="center"
               alignItems="center"
             >
@@ -126,7 +134,7 @@ export function NewPostScreen() {
               ) : imageSelection.state === "uploading" ? (
                 <Spinner size="large" />
               ) : (
-                <YStack alignItems="center" space={8}>
+                <YStack alignItems="center" gap={8}>
                   <Button theme="blue" onPress={() => openCamera()}>
                     Camera
                   </Button>
@@ -136,7 +144,7 @@ export function NewPostScreen() {
                 </YStack>
               )}
             </YStack>
-            <YStack px={16} space={12}>
+            <YStack px={16} gap={12}>
               <TextArea
                 h={120}
                 placeholder="Enter caption"

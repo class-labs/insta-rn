@@ -28,8 +28,8 @@ export function CameraView(props: Props) {
         flex={1}
         justifyContent="center"
         alignItems="center"
-        backgroundColor="white"
-        space={12}
+        backgroundColor="$background"
+        gap={12}
       >
         <Paragraph>Camera permission needed.</Paragraph>
         <Button onPress={() => requestPermission()}>Enable Camera</Button>
@@ -42,7 +42,7 @@ export function CameraView(props: Props) {
       <YStack
         flex={1}
         backgroundColor="black"
-        space={12}
+        gap={12}
         pt={insets.top}
         pb={insets.bottom}
       >
@@ -91,7 +91,7 @@ export function CameraView(props: Props) {
               width={72}
               height={72}
               borderRadius={36}
-              backgroundColor="white"
+              backgroundColor="$background"
               borderWidth={6}
               borderColor="#e8e8e8"
             />
