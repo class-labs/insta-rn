@@ -9,48 +9,20 @@ import { getPosts } from "../api/getPosts";
 import { FeedPostItem } from "../components/FeedPostItem";
 import { useAuth } from "../support/Auth";
 
-function HeaderLeft() {
-  const { isLoggedIn, setAuthToken } = useAuth();
-  return isLoggedIn ? (
-    <Pressable
-      style={({ pressed }) => (pressed ? { opacity: 0.5 } : undefined)}
-      onPress={() => {
-        setAuthToken(null);
-        Alert.alert("Logged Out", "You have been logged out.");
-      }}
-    >
-      <IconLogOut />
-    </Pressable>
-  ) : null;
-}
-
-function HeaderRight() {
-  const navigation = useNavigation();
-  const { isLoggedIn } = useAuth();
-  return (
-    <Pressable
-      style={({ pressed }) => (pressed ? { opacity: 0.5 } : undefined)}
-      onPress={() => {
-        if (isLoggedIn) {
-          navigation.navigate("NewPost");
-        } else {
-          navigation.navigate("Login");
-        }
-      }}
-    >
-      <IconPlus />
-    </Pressable>
-  );
-}
-
 export function HomeScreen() {
   const navigation = useNavigation();
   const { data, error, isLoading, refetch } = useQuery(["posts"], getPosts);
 
   useEffect(() => {
     navigation.setOptions({
-      headerLeft: () => <HeaderLeft />,
-      headerRight: () => <HeaderRight />,
+      headerRight: () => (
+        <Pressable
+          style={({ pressed }) => (pressed ? { opacity: 0.5 } : undefined)}
+          onPress={() => {}}
+        >
+          <IconPlus />
+        </Pressable>
+      ),
     });
   }, [navigation]);
 
