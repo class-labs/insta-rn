@@ -51,7 +51,6 @@ export function HomeScreen() {
     navigation.setOptions({
       headerLeft: () => <HeaderLeft />,
       headerRight: () => <HeaderRight />,
-      headerBackTitleVisible: false,
     });
   }, [navigation]);
 
