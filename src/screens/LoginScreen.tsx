@@ -1,9 +1,30 @@
 import { useState } from "react";
+import { Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Anchor, Button, Input, Label, Paragraph, View } from "tamagui";
 
+import { useAuth } from "../support/Auth";
+
+async function sendLogin(username: string, password: string) {
+  const response = await fetch("https://insta-api.web-api.dev/login", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({
+      username: username,
+      password: password,
+    }),
+  });
+  const data = Object(await response.json());
+  if (response.status === 200) {
+    return String(data.token);
+  } else {
+    return null;
+  }
+}
+
 export function LoginScreen() {
   const navigation = useNavigation();
+  const { setAuthToken } = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   return (
@@ -38,7 +59,18 @@ export function LoginScreen() {
           placeholder="Enter your password"
         />
       </View>
-      <Button theme="blue" onPress={() => {}}>
+      <Button
+        theme="blue"
+        onPress={async () => {
+          const authToken = await sendLogin(username, password);
+          if (authToken === null) {
+            Alert.alert("Login failed");
+          } else {
+            setAuthToken(authToken);
+            navigation.navigate("Home");
+          }
+        }}
+      >
         Login
       </Button>
       <View flexDirection="row" justifyContent="center" gap={4}>
