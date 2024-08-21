@@ -19,8 +19,7 @@ type Props = {
 
 export function FeedPostItem(props: Props) {
   const { post } = props;
-  const { authToken } = useAuth();
-  const isLoggedIn = authToken !== null;
+  const { isLoggedIn } = useAuth();
   const navigation = useNavigation();
   const queryClient = useQueryClient();
   const { mutate: likePost } = useMutation(sendLikePost, {

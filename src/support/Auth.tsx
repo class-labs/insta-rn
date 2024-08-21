@@ -53,5 +53,6 @@ export function useAuth() {
       setLocalToken(newToken);
     });
   }, []);
-  return { authToken, setAuthToken };
+  const isLoggedIn = authToken !== null;
+  return { isLoggedIn, authToken, setAuthToken };
 }

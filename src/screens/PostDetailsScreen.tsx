@@ -26,8 +26,7 @@ import { useAuth } from "../support/Auth";
 import { formatRelativeTime } from "../support/formatRelativeTime";
 
 export function PostDetailsScreen() {
-  const { authToken } = useAuth();
-  const isLoggedIn = authToken !== null;
+  const { isLoggedIn } = useAuth();
   const route = useRoute();
   const params = Object(route.params);
   const postId = String(params.postId);
