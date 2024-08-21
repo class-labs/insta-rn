@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Alert, Platform } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import Animated, { useAnimatedKeyboard } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import {
   Anchor,
@@ -15,6 +16,7 @@ import {
 export function SignupScreen() {
   const navigation = useNavigation();
   const safeAreaInsets = useSafeAreaInsets();
+  const keyboard = useAnimatedKeyboard();
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -90,6 +92,7 @@ export function SignupScreen() {
             Log in
           </Anchor>
         </View>
+        <Animated.View style={{ height: keyboard.height }} />
       </View>
     </ScrollView>
   );
