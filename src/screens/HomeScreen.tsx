@@ -32,10 +32,11 @@ export function HomeScreen() {
           return (
             <Pressable
               onPress={() => {
-                navigation.navigate("PostDetails");
+                navigation.navigate("PostDetails", { postId: post.id });
               }}
+              key={post.id}
             >
-              <View key={post.id}>
+              <View>
                 <Image aspectRatio={1} source={{ uri: post.photo }} />
                 <Paragraph paddingHorizontal={20}>{post.caption}</Paragraph>
               </View>
