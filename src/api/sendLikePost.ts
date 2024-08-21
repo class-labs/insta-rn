@@ -2,7 +2,7 @@ import { Post } from "../types/Post";
 import { getAuthHeaders } from "./getAuthHeaders";
 import { toUrl } from "./toUrl";
 
-export async function sendLikePost(postId: string): Promise<Post> {
+export async function sendLikePost(postId: string) {
   const response = await fetch(toUrl(`/posts/${postId}/like`), {
     method: "POST",
     headers: {
@@ -14,5 +14,7 @@ export async function sendLikePost(postId: string): Promise<Post> {
   if (!response.ok) {
     throw new Error(`Unexpected response status: ${response.status}`);
   }
-  return await response.json();
+  // @ts-expect-error
+  const post: Post = await response.json();
+  return post;
 }

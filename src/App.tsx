@@ -7,6 +7,7 @@ import {
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useTheme } from "tamagui";
 
+import { PostDetails } from "./components/PostDetails";
 import { AppProvider } from "./providers/AppProvider";
 import { HomeScreen } from "./screens/HomeScreen";
 import { RootStackParamList } from "./types/RootStackParamList";
@@ -31,6 +32,13 @@ function ThemedNavigationContainer() {
         }}
       >
         <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen
+          name="PostDetails"
+          options={{
+            title: "Post Details",
+          }}
+          component={PostDetails}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
